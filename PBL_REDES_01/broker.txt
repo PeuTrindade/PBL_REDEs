@@ -1,0 +1,54 @@
+class Broker:
+    def __init__(self):
+        # Criando um servidor TCP, utilizando a lib socket.
+        self.tcpServer = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # Criando um servidor UDP, utilizando a lib socket.
+        self.udpServer = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # Porta para o servidor TCP.
+        self.tcpPort = 3000
+        # Porta para o servidor UDP.
+        self.udpPort = 5000
+        # Criando um dicionário para armazenar os dispositivos conectados.
+        self.connectedDevices = {}
+
+        # Chamando função para iniciar o servidor TCP.
+        self.startTCPServer()
+        # Chamando função para iniciar o servidor UDP.
+        self.startUDPServer()
+
+    def startTCPServer(self):
+        self.tcpServer.bind(('172.16.103.6', self.tcpPort))
+        self.tcpServer.listen(1)
+
+        print(f"Servidor TCP está conectado na porta {self.tcpPort}!")
+        
+        # Connection -> Objeto do dispositivo conectado.
+        # Address -> Endereço do dispositivo conectado.
+        connection, address = self.tcpServer.accept()
+
+        print(f"Um novo dispositivo foi conectado: {address}")
+
+        self.connectedDevices[address] = connection
+
+    def startUDPServer(self):
+        self.udpServer.bind(('172.16.103.6', self.udpPort))
+        print(f"Servidor UDP está conectado na porta {self.udpPort}")
+
+    def receiveUDPMessage(self):
+        message = self.udpServer.recv(1024).decode()
+
+        print(message)
+
+
+broker = Broker()
+
+if tcpServer:
+            tcpServer.close()
+        if udpServer:
+            udpServer.close()
+
+        tcpServer = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        udpServer = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        tcpServer.bind(('localhost', tcpPort))
+        udpServer.bind(('localhost', udpPort))
+        tcpServer.listen(1)

@@ -1,0 +1,24 @@
+import socket
+
+class Device:
+    def __init__(self):
+        self.clientTCP = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.clientUDP = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+        self.clientTCP.connect(('172.16.103.6', 3000))
+        self.clientUDP.connect(('172.16.103.6', 5000))
+
+    def receiveMessageTCP(self):
+        message = self.clientTCP.recv(1024).decode()
+
+        print(message)
+
+    def sendMessageUDP(self):
+        clientMessage = input('Send a UDP message: ')
+
+        self.clientUDP.sendto(str(clientMessage).encode(), ('172.16.103.6', 5000))
+
+
+device = Device()
+
+device.sendMessageUDP()
